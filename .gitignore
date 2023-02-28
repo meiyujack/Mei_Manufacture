@@ -1,1 +1,3 @@
 my_tools/
+.idea/
+__pycache__/
