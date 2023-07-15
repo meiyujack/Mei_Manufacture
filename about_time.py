@@ -1,6 +1,6 @@
 from uuid import uuid4
 from datetime import datetime
-
+import datetime as DT
 
 class HumanBeing:
     TIAN_GAN = "甲乙丙丁戊己庚辛壬癸"
@@ -21,22 +21,38 @@ class HumanBeing:
         ("0121 0010", "0219 1418"): [{"星宫": "宝瓶", "拉丁": "Aquarius", "角度": (300, 330)}, {"大寒": 300, "立春": 315}],
         ("0219 1418", "0320 1314"): [{"星宫": "双鱼", "拉丁": "Pisces", "角度": (330, 0)}, {"雨水": 330, "惊蛰": 345}],
     }
-    CENTURY_21_C=[20.646,4.81,20.1,5.52,21.04,5.678,21.37,7.108,22.83,7.5,23.13,7.646,23.042,8.318,23.438,7.438,22.36,7.18,21.94,5.4055,20.12]
+    CENTURY_21_C={"春分":20.646,"清明":4.81,"谷雨":20.1,"立夏":5.52,"小满":21.04,"芒种":5.678,
+                  "夏至":21.37,"小暑":7.108,"大暑":22.83,"立秋":7.5,"处暑":23.13,"白露":7.646,
+                  "秋分":23.042,"寒露":8.318,"霜降":23.438,"立冬":7.438,"小雪":22.36,"大雪":7.18,
+                  "冬至":21.94,"小寒":5.4055,"大寒":20.12,"立春":3.87,"雨水":18.73,"惊蛰":5.63}
+
+    def get_JIE_QI(self):
+        near_jieqi=list(HumanBeing.get_sign(datetime.now())[1].keys())
+        y=int(datetime.now().strftime("%y"))
+        d=[int(y*0.2422+HumanBeing.CENTURY_21_C[k]-int(y/4)) for k in near_jieqi]
+        if int(datetime.now().strftime("%d"))>d[1]:
+            near_jieqi=list(HumanBeing.get_sign(datetime.now()+DT.timedelta(days=15))[1].keys())
+            d=[int(y*0.2422+HumanBeing.CENTURY_21_C[k]-int(y/4)) for k in near_jieqi]
+            r=dict(zip(near_jieqi,d))
+            print(f'本月即将来临的节气是{list(r.keys())[0]},为{list(r.values())[0]}号')
+        return dict(zip(near_jieqi,d))
+
 
     def __init__(self, birth: str):
         self.id = uuid4()
-        self.birth = datetime.strptime(birth, "%Y%m%d")
+        try:
+            self.birth = datetime.strptime(birth, "%Y%m%d")
+        except ValueError:
+            raise "格式错误"
         self.gan_zhi = ''.join(HumanBeing.TIAN_GAN)[(self.birth.year - HumanBeing.INIT) % 10] + \
                        ''.join(HumanBeing.DI_ZHI)[(self.birth.year - HumanBeing.INIT) % 12]
-        self.sign = self.get_sign()
-
-    def get_sign(self):
-        for s, v in HumanBeing.SIGN.items():
-            if datetime.strptime(s[0].split(' ')[0], "%m%d") <= datetime.strptime(f"{self.birth.month}{self.birth.day}","%m%d") < datetime.strptime(s[1].split(' ')[0], "%m%d"):
-                return v
+        self.sign = HumanBeing.get_sign(self.birth)
 
     @staticmethod
-    def get
+    def get_sign(dt:datetime):
+        for s, v in HumanBeing.SIGN.items():
+            if s[0].split(' ')[0] <= dt.strftime("%m%d") < s[1].split(' ')[0]:
+                return v
 
     @staticmethod
     def is_leap_year(year):
@@ -50,19 +66,22 @@ class HumanBeing:
     @staticmethod
     def update_feb(year):
         HumanBeing.DAYS.update({2: 29}) if HumanBeing.is_leap_year(year) else HumanBeing.DAYS.update({2: 28})
+        HumanBeing.DAYS = {k: HumanBeing.DAYS[k] for k in sorted(HumanBeing.DAYS)}
 
     def get_days(self):
         _sum = 0
         r = [HumanBeing.is_leap_year(y) for y in range(self.birth.year + 1, datetime.now().year)]
         days = r.count(True) * 366 + r.count(False) * 365
-        HumanBeing.update_feb(self.birth.year)
-        for m in list(HumanBeing.DAYS.keys())[:self.birth.month]:
+        print(days)
+        for m in list(HumanBeing.DAYS.keys())[self.birth.month-1:12+1]:
             _sum += HumanBeing.DAYS[m]
-        _sum += self.birth.day
+        _sum += HumanBeing.DAYS[self.birth.month]-self.birth.day
+        print(_sum)
         HumanBeing.update_feb(datetime.now().year)
-        for m in list(HumanBeing.DAYS.keys())[:datetime.now().month - 1]:
+        for m in list(HumanBeing.DAYS.keys())[0:datetime.now().month-1]:
             _sum += HumanBeing.DAYS[m]
         _sum += datetime.now().day
+        print(_sum)
         return days + _sum
 
     @staticmethod
@@ -73,3 +92,7 @@ class HumanBeing:
     def leave_message(self):
         print(
             f"{self.sign[0]['星宫']}({self.sign[0]['拉丁']})的我于{self.gan_zhi}{self.birth.year}年来到人间，至今已模已样存在{self.get_days()}天。")
+
+if __name__ == '__main__':
+    my=HumanBeing('19890622')
+    my.get_JIE_QI()
