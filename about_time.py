@@ -163,11 +163,11 @@ class HumanBeing:
         r = dict(zip(near_jieqi, d))
         if int(datetime.now().strftime("%d")) > 15:
             print(
-                f'本月即将来临的节气是{list(r.keys())[1]},为{int(datetime.now().strftime("%m"))+1}月{list(r.values())[1]}号'
+                f'即将来临的节气是{list(r.keys())[1]},为{int(datetime.now().strftime("%m"))+1}月{list(r.values())[1]}号'
             )
         else:
             print(
-                f'本月即将来临的节气是{list(r.keys())[0]},为{int(datetime.now().strftime("%m"))}月{list(r.values())[0]}号'
+                f'即将来临的节气是{list(r.keys())[0]},为{int(datetime.now().strftime("%m"))}月{list(r.values())[0]}号'
             )
         #return dict(zip(near_jieqi, d))
 
@@ -224,7 +224,7 @@ class HumanBeing:
     @staticmethod
     def alive_in_year(year):
         months = (datetime.now().year - year) * 12 + datetime.now().month
-        print(f"这是{year}年第{months}月")
+        print(f"这是{year}年{months}月")
 
     def leave_message(self):
         print(
