@@ -1,3 +1,5 @@
 my_tools/
 .idea/
 __pycache__/
+.vscode
+instance/
