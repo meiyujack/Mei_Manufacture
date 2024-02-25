@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content%}
+<form method="post" class="max-w-max mx-auto space-y-10">
+    {{ form.csrf_token}}
+    <div class="flex items-center gap-x-20">
+        <div class="py-4 space-x-2"><span>{{ form.singer_id.label }}</span><span>{{ form.singer_id }}</span></div>
+        <div class="py-4 space-x-2"><span>{{ form.album_id.label }}</span><span>{{ form.album_id}}</span></div>
+    </div>
+    <table class="border-collapse border border-slate-400 m-16">
+        <thead>
+            <tr>
+                <th class="border border-slate-700">歌曲名称</th>
+                <th class="border border-slate-700">歌曲时长</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tracks%}
+                <tr class="text-center">
+                    {% for value in row %}
+                    <td class="border border-slate-300">{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+<!-- <% for track in tracks %>
+            
+<%endfor%> -->
+
+<!-- <div class="mx-auto max-w-max">
+    <div class="columns-3 float-left">
+        <p>{{ form.singer_id.label }}</p>
+        <p>{{ form.singer_id }}</p>
+    </div>
+    <div class="columns-4 float-left">
+        <p>{{ form.album_id.label }}</p>
+        <p>{{ form.album_id}}</p>
+    </div>
+</div> -->
+
+{% endblock %}

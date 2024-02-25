@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title%}
+新增歌曲
+{% endblock %}
+{% block content%}
 <form method="post">
     {{ form.csrf_token}}
     {{ form.name.label}}<br>{{ form.name }}<br>
@@ -6,3 +11,4 @@
     {{ form.album_id.label }}<br>{{ form.album_id}}<br>
     {{ form.submit }}<br>
 </form>
+{% endblock %}
