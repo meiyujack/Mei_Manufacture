@@ -13,7 +13,7 @@ class BaseConfig:
 
 class DevelopmentConfig(BaseConfig):
     TEMPLATES_AUTO_RELOAD = True
-    SQLALCHEMY_DATABASE_URI="sqlite:///sing.db"
+    SQLALCHEMY_DATABASE_URI="sqlite:///test.db"
     pass
 
 
@@ -23,7 +23,7 @@ class ProductionConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///sing.db'
     WTF_CSRF_ENABLED = False
 
 

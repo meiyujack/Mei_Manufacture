@@ -9,6 +9,11 @@
 </head>
 
 <body>
+    {% for message in get_flashed_messages(with_categories=True) %}
+    <div class="{{message[0]}}">
+            {{ message[1] }}
+    </div>
+    {% endfor %}
     <h1 class="text-3xl font-bold underline">
         Hello world!
     </h1>
@@ -17,7 +22,7 @@
 
         </select>
     </form> -->
-    <div id="content">{% block content%}{% endblock %}</div>
+    <div id="content" class="max-w-max mx-auto">{% block content%}{% endblock %}</div>
 </body>
 
 </html>

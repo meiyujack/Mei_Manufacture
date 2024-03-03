@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content%}
-<form method="post" class="max-w-max mx-auto space-y-10">
+<form method="post">
     {{ form.csrf_token}}
-    <div class="flex items-center gap-x-20">
-        <div class="py-4 space-x-2"><span>{{ form.singer_id.label }}</span><span>{{ form.singer_id }}</span></div>
-        <div class="py-4 space-x-2"><span>{{ form.album_id.label }}</span><span>{{ form.album_id}}</span></div>
+    <div class="flex flex-row items-center mt-20 gap-7">
+        <span>{{ form.singer_id.label }}</span><span>{{ form.singer_id }}</span>
+        <span>{{ form.album_id.label }}</span><span>{{ form.album_id}}</span>
     </div>
     <table class="border-collapse border border-slate-400 m-16">
         <thead>

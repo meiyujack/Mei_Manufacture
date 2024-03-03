@@ -33,7 +33,8 @@ class Base(DeclarativeBase, Generic[T]):
         else:
             return PermissionError
 
-    def update(self, curr_user):
+    @staticmethod
+    def update(curr_user):
         if curr_user.role.permissions.id & 1 == 1:
             db.session.commit()
             return '修改成功'

@@ -4,6 +4,7 @@ from sqlalchemy import select
 
 from sing.forms import SingerForm
 from sing.models import db,Singer
+from sing.utils import turn_rows_into_dict
 
 singer_bp=Blueprint('singer',__name__)
 
@@ -25,12 +26,11 @@ def singer_insert():
     #     else:
     #         raise result("权限不足")
 
-@singer_bp.get("/singer/all")
+@singer_bp.get("/all")
 def singer_all():
     singer_all=db.session.execute(select(Singer)).all()
-    result=[]
-    for singer in singer_all:
-        raw=singer[0].to_json()
-        result.append(raw)
+    return render_template("singer_all.html",singers=turn_rows_into_dict(singer_all))
 
-    return jsonify({"all_singers":result})
+@singer_bp.get("/<singer_id>")
+def singer_one(singer_id):
+    return render_template("singer_all.html",singers=[db.session.execute(select(Singer).where(Singer.id==singer_id)).one_or_none()[0].to_json()])

@@ -3,12 +3,12 @@
 新增歌曲
 {% endblock %}
 {% block content%}
-<form method="post">
+<form method="post" class="space-y-9">
     {{ form.csrf_token}}
-    {{ form.name.label}}<br>{{ form.name }}<br>
-    {{ form.duration.label}}<br>{{ form.duration }}<br>
-    {{ form.singer_id.label }}<br>{{ form.singer_id}}<br>
-    {{ form.album_id.label }}<br>{{ form.album_id}}<br>
-    {{ form.submit }}<br>
+    <div class="space-x-2"><span>{{ form.name.label}}</span><span>{{ form.name }}</span></div>
+    <div class="space-x-9"><span>{{ form.duration.label}}</span><span>{{ form.duration }}</span></div>
+    <div class="flex gap-2 items-center"><span>{{ form.singer_id.label}}</span><span>{{ form.singer_id }}</span><span>{{ form.album_id.label}}</span><span>{{ form.album_id }}</span></div>
+
+    <div class="float-right">{{ form.submit }}</div>
 </form>
 {% endblock %}

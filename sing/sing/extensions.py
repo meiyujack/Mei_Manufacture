@@ -11,6 +11,7 @@ login_manager=LoginManager()
 login_manager.login_view='user.login'
 login_manager.login_message="请登陆访问该页面。"
 
+
 from sing.models import User
 @login_manager.user_loader
 def load_user(id) -> User:

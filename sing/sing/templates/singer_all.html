@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title%}
+{% if singers | length >1 %}
+所有歌手
+{% else %}
+歌手-{{ singers[0]["name"] }}
+{% endif %}
+{% endblock %}
+{% block content%}
+<table class="border-collapse border border-slate-400 m-16">
+    <thead>
+        <tr>
+            <th class="border border-slate-700">序号</th>
+            <th class="border border-slate-700">姓名</th>
+            <th class="border border-slate-700">生日</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in singers%}
+            <tr class="text-center">
+                {% for key,value in row.items() | reverse %}
+                <td class="border border-slate-300">{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

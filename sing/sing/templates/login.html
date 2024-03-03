@@ -3,11 +3,11 @@
 登陆
 {% endblock %}
 {% block content%}
-<form method="post">
+<form method="post" class="flex flex-col space-y-5 m-10">
     {{ form.csrf_token}}
-    {{ form.nickname.label}}<br>{{ form.nickname }}<br>
-    {{ form.password.label}}<br>{{ form.password }}<br>
-    {{ form.remember}}{{ form.remember.label }}<br>
-    {{ form.submit }}<br>
+    <div class="space-x-3"><span>{{ form.nickname.label}}</span><span>{{ form.nickname }}</span></div>
+    <div class="space-x-3"><span>{{ form.password.label}}</span><span>{{ form.password }}</span></div>
+    <div class="float-left space-x-3">{{ form.remember}}{{ form.remember.label }}</div>
+    <div class="text-right">{{ form.submit }}</div>
 </form>
 {% endblock %}

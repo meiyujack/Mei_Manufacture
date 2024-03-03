@@ -31,8 +31,9 @@ def track_insert():
         else:
             raise result("权限不足")
         
-@login_required
+
 @track_bp.route("/update", methods=["GET", "POST"])
+@login_required
 def update():
     if request.method == "GET":
         track_form = TrackForm()
@@ -64,3 +65,7 @@ def track_all():
         raw["album_id"]=track[0].album.name
         result.append(raw)
     return jsonify({"all_tracks":result})
+
+@track_bp.get("/<track_id>")
+def track_one(track_id):
+    return db.session.execute(select(Track).where(Track.id==track_id)).one_or_none()[0].to_json()
